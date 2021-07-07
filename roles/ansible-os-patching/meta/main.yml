@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Maithili Peetani
-  description: Install and configure docker
+  description: Patch linux servers 
 
   license: license (GNU Lesser General Public License v3.0)
 
