@@ -1,0 +1,41 @@
+---
+- name: Ensure docker directories exists
+  file:
+    state: directory
+    path: "{{ item.dir }}"
+    mode: "{{ item.mode }}"
+  with_items:
+    - dir: "{{ docker_data_root }}"
+      mode: "0711"
+    - dir: /etc/docker
+      mode: "0700"
+
+- name: Configure docker
+  template:
+    src: daemon.json.j2
+    dest: "/etc/docker/daemon.json"
+    mode: 0644
+  notify: restart docker
+
+- name: Configure iptables rule forward
+  block:
+    - name: Ensure package iptables persistent is present
+      package:
+        name: "{{ (ansible_os_family == 'RedHat') | ternary('iptables-services','iptables-persistent') }}"
+        state: present
+
+    - name: Configure iptables rules for docker
+      copy:
+        remote_src: false
+        src: "{{ role_path }}/files/iptables"
+        dest: "{{ (ansible_os_family == 'RedHat') | ternary('/etc/sysconfig/iptables', '/etc/iptables/rules.v4') }}"
+        mode: 0600
+      register: iptables_rules
+      notify: restart docker
+
+    - name: Ensure service iptables is enabled and rules are applied"
+      service:
+        name: "{{ (ansible_os_family == 'RedHat') | ternary('iptables', 'netfilter-persistent') }}"
+        state: "{% if iptables_rules.changed %}restarted{% else %}started{% endif %}"
+        enabled: true
+  when: docker_allow_forward

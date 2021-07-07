@@ -1,0 +1,48 @@
+---
+ - hosts: all
+   gather_facts: yes
+   become: yes
+
+   tasks:
+   - name: hostname
+     debug:
+       var: ansible_hostname
+
+   - name: date and time
+     vars:
+      msg: |
+       Date: {{ ansible_date_time.date }}
+       Timezone: {{ ansible_date_time.tz }}
+     debug:
+       msg: "{{ msg.split('\n') }}"
+
+   - name: network info
+     vars:
+      msg: |
+       All Interface List: {{ ansible_interfaces }}
+       All IP: {{ ansible_all_ipv4_addresses }}
+       Gateway: {{ ansible_default_ipv4.gateway }}
+       Eth1 MAC: {{ ansible_eth1.macaddress }}
+     debug:
+       msg: "{{ msg.split('\n') }}"
+
+   - name: OS and Kernel info
+     vars:
+      msg: |
+       Distribution: {{ ansible_distribution }}
+       Release: {{ ansible_distribution_release }}
+       Distribution Version: {{ ansible_distribution_version }}
+       Kernel: {{ ansible_kernel }}
+       Architecture: {{ ansible_architecture }}
+     debug:
+       msg: "{{ msg.split('\n') }}"
+
+   - name: HW info
+     vars:
+      msg: |
+       CPU: {{ ansible_processor }}
+       CPU Core: {{ ansible_processor_cores }}
+       RAM: {{ ansible_memtotal_mb }}
+       SWAP: {{ ansible_memory_mb.swap.total }}
+     debug:
+       msg: "{{ msg.split('\n') }}"

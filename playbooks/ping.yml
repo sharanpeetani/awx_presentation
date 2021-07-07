@@ -1,0 +1,18 @@
+---
+- hosts: all
+  gather_facts: true
+
+  tasks:
+  - name: Ping host
+    ping:
+    register: ping
+
+  - name: Check Server Status
+    block:
+    - debug:
+        msg: "{{ ansible_fqdn }} is up"
+      when: "'pong' in ping.ping"
+
+    - debug:
+        msg: "{{ ansible_fqdn }} is  not up"
+      when: "'pong' not in ping.ping"

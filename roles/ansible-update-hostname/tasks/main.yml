@@ -1,0 +1,13 @@
+---
+# Ensure host name is configured properly
+ 
+- name: Deploy hosts file
+  template:
+    src: hosts
+    dest: /etc/hosts
+    owner: root
+    mode: 0644
+
+- name: Set host name as FQDN
+  hostname:
+    name: "{{ inventory_hostname  }}"

@@ -1,0 +1,34 @@
+---
+- name: Construct repository address
+  set_fact:
+    docker_repo_address: '{{ docker_repo | regex_replace("/$", "") }}/{{ ansible_distribution | lower }}'
+
+- name: "Set up package manager for {{ ansible_os_family }}"
+  include_tasks: "config_{{ ansible_os_family }}.yml"
+
+- name: Install Docker
+  package:
+    name:
+      - "docker-{{ docker_edition }}"
+      - "docker-{{ docker_edition }}-cli"
+      - "containerd.io"
+  notify: restart docker
+
+- name: Docker configuration
+  include_tasks: config_docker.yml
+
+- meta: flush_handlers
+
+- name: Ensure docker is started and enabled
+  systemd:
+    name: "docker"
+    enabled: true
+    state: started
+    daemon_reload: yes
+
+- name: Ensure docker users are added to the docker group
+  user:
+    name: "{{ item }}"
+    groups: docker
+    append: true
+  with_items: "{{ docker_users }}"

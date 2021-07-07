@@ -1,0 +1,6 @@
+---
+# defaults file for ansible-os-patching
+
+yum_name: "*"
+yum_state: latest
+yum_exclude: ""

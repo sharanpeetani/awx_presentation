@@ -1,0 +1,4 @@
+---
+# tasks file for ansible-os-patching
+- name: "OS Patch for {{ ansible_os_family }}"
+  include_tasks: "patch_{{ ansible_os_family }}.yml"

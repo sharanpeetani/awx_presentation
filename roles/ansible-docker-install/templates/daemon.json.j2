@@ -1,0 +1,10 @@
+{
+    "data-root": "{{ docker_data_root }}",
+    "exec-opts": ["native.cgroupdriver={{docker_native_cgroupdriver | default('systemd') }}"],
+    "log-driver": "{{ docker_log_driver | default('json-file') }}",
+    "log-opts": {
+      "max-size": "{{docker_log_max_size | default('100m')}}"
+    },
+    
+    "storage-driver": "{{ docker_storage_driver | default ('overlay2')}}"
+}

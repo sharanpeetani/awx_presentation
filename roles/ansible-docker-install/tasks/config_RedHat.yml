@@ -1,0 +1,80 @@
+---
+- name: Remove old versions of docker if present
+  yum:
+    name:
+      - docker
+      - docker-client
+      - docker-client-latest
+      - docker-common
+      - docker-latest
+      - docker-latest-logrotate
+      - docker-logrotate
+      - docker-engine
+    state: absent
+
+- name: Add Docker repository GPG key
+  rpm_key:
+    key: "{{ docker_repo_address }}/gpg"
+    validate_certs: "{{ docker_repo_valid_ssl }}"
+    state: present
+
+- name: Configure yum docker repository
+  get_url:
+    url: "{{ docker_repo_address }}/docker-{{ docker_edition }}.repo"
+    dest: '/etc/yum.repos.d/docker-{{ docker_edition }}.repo'
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Set baseUrl for docker repository
+  replace:
+    path: /etc/yum.repos.d/docker-{{ docker_edition }}.repo
+    regexp: '^baseurl=https://download.docker.com/linux/(.*)$'
+    replace: 'baseurl={{ docker_repo | regex_replace("/$", "") }}/\1'
+
+- name: Configure Docker Edge repo
+  ini_file:
+    dest: '/etc/yum.repos.d/docker-{{ docker_edition }}.repo'
+    section: 'docker-{{ docker_edition }}-edge'
+    option: enabled
+    value: '1'
+    mode: 0644
+  when: docker_enable_edge
+
+- name: Configure Docker Test repo
+  ini_file:
+    dest: '/etc/yum.repos.d/docker-{{ docker_edition }}.repo'
+    section: 'docker-{{ docker_edition }}-test'
+    option: enabled
+    value: '{{ docker_enable_test }}'
+    mode: 0644
+  when: docker_enable_test
+
+- name: Configure containerd on RHEL 8
+  block:
+    - name: Ensure container-selinux is installed.
+      package:
+        name: container-selinux
+        state: present
+
+    - name: Disable container-tools module
+      command: dnf -y module disable container-tools
+      changed_when: false
+  when: ansible_distribution_major_version | int == 8
+
+- name: Configure docker on Fedora >= 31
+  block:
+    - name: Check if cgroupsV1 are currently in use
+      command: 'grep unified_cgroup_hierarchy=0 /boot/grub2/grubenv'
+      register: cgroupV1_config
+      failed_when: false
+      changed_when: false
+
+    - name: Configure cgroupsV1 on fedora >= 31
+      command: 'grubby --update-kernel=ALL --args="systemd.unified_cgroup_hierarchy=0"'
+      when: cgroupV1_config.stdout_lines|length != 1
+
+    - name: Reboot for cgroup change
+      reboot:
+      when: cgroupV1_config.stdout_lines|length != 1
+  when: ansible_distribution == "Fedora" and ansible_distribution_version|int >= 31
