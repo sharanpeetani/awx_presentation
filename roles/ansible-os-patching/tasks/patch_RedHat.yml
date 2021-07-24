@@ -9,9 +9,6 @@
   when:
     - (ansible_facts['distribution_major_version'] == '7')
 
-- debug:
-    var: yumcommandout
-
 - name: Print errors if yum failed
   debug:
     msg: "yum update failed"
