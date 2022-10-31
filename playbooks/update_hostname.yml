@@ -1,0 +1,21 @@
+- name: "Server configuration"
+  hosts: "all"
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Display inventory_hostname
+      debug:
+        msg: "inventory_namename is {{inventory_hostname}}"
+
+    - name: Display ansible_hostname
+      debug:
+        msg: "ansible-hostname is {{ansible_hostname}}"
+
+    - name: "Configure hostname"
+      hostname:
+        name: "{{ new_hostname }}"
+    
+    - name: New hostname
+      debug:
+        msg: "New inventory_hostname is {{inventory_hostname}} and ansible_hostname is {{ansible_hostname}}"
