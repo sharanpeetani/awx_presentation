@@ -16,7 +16,7 @@
       register: yumcommandout
       when:
         - (ansible_facts['distribution_major_version'] == '6') or
-          (ansible_facts['distribution_major_version'] == '7')
+          (ansible_facts['distribution_major_version'] >= '7')
 
     - debug:
         var: yumcommandout
