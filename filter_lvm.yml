@@ -1,0 +1,24 @@
+---
+- hosts: all
+  gather_facts: no
+  become: yes
+  tasks:
+  - name: detect lvm setup
+    setup:
+      filter: "ansible_lvm"
+      gather_subset: "!all,!min,hardware"
+  
+  - set_fact:
+      lvm_filter: "{{ ansible_lvm.lvs | dict2items | selectattr('value.vg', 'eq', 'rhel_rhel8') | list }}"
+
+#  - debug:
+#      msg: "{{ lvm_filter }}"
+
+  - set_fact:
+      swap_filter: '{{ swap_filter | default({}) | combine({item.value.vg: [item.key]}, list_merge="append") }}'
+    with_items: '{{ ansible_lvm.lvs | dict2items }}'
+    when: "'swap' in item.key"
+
+  - debug:
+      msg: "{{ swap_filter }}"
+

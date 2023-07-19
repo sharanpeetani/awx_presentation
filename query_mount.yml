@@ -1,0 +1,21 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  vars:
+    mount_check:
+    - path: '/'
+    - path: '/boot'
+
+  tasks:
+    - name: show only /boot info (results of selectattr must be converted to a list)
+      debug:
+        msg: "{{ ansible_mounts | selectattr('mount', 'eq', '/boot') | list }}"
+
+    # Setting a temporary (task-level) var called boot_info, to break up the Jinja work.
+    # boot_info is a list with 1 item, hence the .0.
+    - name: Grab certain attributes from /boot mountpoint
+      debug:
+        msg: "My boot usage is {{ boot_info.0.block_used }} out of {{ boot_info.0.block_total }} bytes."
+      vars:
+        boot_info: "{{ ansible_mounts | selectattr('mount', 'eq', '/boot') | list }}"

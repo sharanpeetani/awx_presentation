@@ -1,0 +1,268 @@
+{
+    "changed": false,
+    "msg": "All items completed",
+    "results": [{
+        "ansible_loop_var": "input",
+        "json": {
+            "extractors": [{
+                "condition_type": "regex",
+                "condition_value": "^.*(ASA-\\d-106023).*$",
+                "converter_exceptions": 0,
+                "converters": [],
+                "creator_user_id": "triple_admin",
+                "cursor_strategy": "copy",
+                "exceptions": 0,
+                "extractor_config": {
+                    "grok_pattern": "%{CISCOTAG:logid}: %{CISCO_ACTION:action} %{WORD:proto} src %{NOTSPACE:srcint}:%{IPV4:srcip}/%{BASE10NUM:srcport} dst %{NOTSPACE:dstint}:%{IPV4:dstip}/%{BASE10NUM:dstport} by access-group %{QUOTEDSTRING:acl}"
+                },
+                "id": "a2d14160-f8f9-11eb-8d07-005056991190",
+                "metrics": {
+                    "condition": {
+                        "duration_unit": "microseconds",
+                        "rate": {
+                            "fifteen_minute": 0,
+                            "five_minute": 0,
+                            "mean": 0,
+                            "one_minute": 0,
+                            "total": 0
+                        },
+                        "rate_unit": "events/second",
+                        "time": {
+                            "95th_percentile": 0,
+                            "98th_percentile": 0,
+                            "99th_percentile": 0,
+                            "max": 0,
+                            "mean": 0,
+                            "min": 0,
+                            "std_dev": 0
+                        }
+                    },
+                    "condition_hits": 0,
+                    "condition_misses": 0,
+                    "converters": {
+                        "duration_unit": "microseconds",
+                        "rate": {
+                            "fifteen_minute": 0,
+                            "five_minute": 0,
+                            "mean": 0,
+                            "one_minute": 0,
+                            "total": 0
+                        },
+                        "rate_unit": "events/second",
+                        "time": {
+                            "95th_percentile": 0,
+                            "98th_percentile": 0,
+                            "99th_percentile": 0,
+                            "max": 0,
+                            "mean": 0,
+                            "min": 0,
+                            "std_dev": 0
+                        }
+                    },
+                    "execution": {
+                        "duration_unit": "microseconds",
+                        "rate": {
+                            "fifteen_minute": 0,
+                            "five_minute": 0,
+                            "mean": 0,
+                            "one_minute": 0,
+                            "total": 0
+                        },
+                        "rate_unit": "events/second",
+                        "time": {
+                            "95th_percentile": 0,
+                            "98th_percentile": 0,
+                            "99th_percentile": 0,
+                            "max": 0,
+                            "mean": 0,
+                            "min": 0,
+                            "std_dev": 0
+                        }
+                    },
+                    "total": {
+                        "duration_unit": "microseconds",
+                        "rate": {
+                            "fifteen_minute": 0,
+                            "five_minute": 0,
+                            "mean": 0,
+                            "one_minute": 0,
+                            "total": 0
+                        },
+                        "rate_unit": "events/second",
+                        "time": {
+                            "95th_percentile": 0,
+                            "98th_percentile": 0,
+                            "99th_percentile": 0,
+                            "max": 0,
+                            "mean": 0,
+                            "min": 0,
+                            "std_dev": 0
+                        }
+                    }
+                },
+                "order": 0,
+                "source_field": "full_message",
+                "target_field": "",
+                "title": "ASA106023 TCP/UDP Denies",
+                "type": "grok"
+            }],
+            "total": 1
+        },
+        "msg": "OK (1780 bytes)",
+        "redirected": false,
+        "status": 200,
+        "url": "http://192.168.21.82:9000/api/system/inputs/6104170beca15547502665d6/extractors",
+        "x_graylog_node_id": "ba52ad48-0b13-419d-b957-d47d8911b413",
+        "x_runtime_microseconds": "2296"
+    }, {
+        "ansible_loop_var": "input",
+        "json": {
+            "extractors": [{
+                "condition_type": "regex",
+                "condition_value": "^.*(ASA-\\d-106023).*$",
+                "converter_exceptions": 0,
+                "converters": [],
+                "creator_user_id": "triple_admin",
+                "cursor_strategy": "copy",
+                "exceptions": 0,
+                "extractor_config": {
+                    "grok_pattern": "%{CISCOTAG:logid}: %{CISCO_ACTION:action} %{WORD:proto} src %{NOTSPACE:srcint}:%{IPV4:srcip}/%{BASE10NUM:srcport} dst %{NOTSPACE:dstint}:%{IPV4:dstip}/%{BASE10NUM:dstport} by access-group %{QUOTEDSTRING:acl}"
+                },
+                "id": "bdd27c20-f8fb-11eb-8d07-005056991190",
+                "metrics": {
+                    "condition": {
+                        "duration_unit": "microseconds",
+                        "rate": {
+                            "fifteen_minute": 0,
+                            "five_minute": 0,
+                            "mean": 0,
+                            "one_minute": 0,
+                            "total": 0
+                        },
+                        "rate_unit": "events/second",
+                        "time": {
+                            "95th_percentile": 0,
+                            "98th_percentile": 0,
+                            "99th_percentile": 0,
+                            "max": 0,
+                            "mean": 0,
+                            "min": 0,
+                            "std_dev": 0
+                        }
+                    },
+                    "condition_hits": 0,
+                    "condition_misses": 0,
+                    "converters": {
+                        "duration_unit": "microseconds",
+                        "rate": {
+                            "fifteen_minute": 0,
+                            "five_minute": 0,
+                            "mean": 0,
+                            "one_minute": 0,
+                            "total": 0
+                        },
+                        "rate_unit": "events/second",
+                        "time": {
+                            "95th_percentile": 0,
+                            "98th_percentile": 0,
+                            "99th_percentile": 0,
+                            "max": 0,
+                            "mean": 0,
+                            "min": 0,
+                            "std_dev": 0
+                        }
+                    },
+                    "execution": {
+                        "duration_unit": "microseconds",
+                        "rate": {
+                            "fifteen_minute": 0,
+                            "five_minute": 0,
+                            "mean": 0,
+                            "one_minute": 0,
+                            "total": 0
+                        },
+                        "rate_unit": "events/second",
+                        "time": {
+                            "95th_percentile": 0,
+                            "98th_percentile": 0,
+                            "99th_percentile": 0,
+                            "max": 0,
+                            "mean": 0,
+                            "min": 0,
+                            "std_dev": 0
+                        }
+                    },
+                    "total": {
+                        "duration_unit": "microseconds",
+                        "rate": {
+                            "fifteen_minute": 0,
+                            "five_minute": 0,
+                            "mean": 0,
+                            "one_minute": 0,
+                            "total": 0
+                        },
+                        "rate_unit": "events/second",
+                        "time": {
+                            "95th_percentile": 0,
+                            "98th_percentile": 0,
+                            "99th_percentile": 0,
+                            "max": 0,
+                            "mean": 0,
+                            "min": 0,
+                            "std_dev": 0
+                        }
+                    }
+                },
+                "order": 0,
+                "source_field": "full_message",
+                "target_field": "",
+                "title": "ASA106023 TCP/UDP Denies",
+                "type": "grok"
+            }],
+            "total": 1
+        },
+        "msg": "OK (1780 bytes)",
+        "redirected": false,
+        "status": 200,
+        "url": "http://192.168.21.82:9000/api/system/inputs/6104190eeca1554750266814/extractors",
+        "x_graylog_node_id": "ba52ad48-0b13-419d-b957-d47d8911b413",
+        "x_runtime_microseconds": "2251"
+    }, {
+        "ansible_loop_var": "input",
+        "changed": false,
+        "input": {
+            "configuration": {
+                "allow_override_date": false,
+                "bind_address": "0.0.0.0",
+                "expand_structured_data": false,
+                "force_rdns": false,
+                "number_worker_threads": 8,
+                "override_source": null,
+                "port": 5996,
+                "recv_buffer_size": null,
+                "store_full_message": true
+            },
+            "extractors": [{
+                "condition_type": "regex",
+                "condition_value": "^.*(ASA-\\d-106023).*$",
+                "converters": {},
+                "cut_or_copy": "copy",
+                "extractor_config": {
+                    "pattern": "%{CISCOTAG:logid}: %{CISCO_ACTION:action} %{WORD:proto} src %{NOTSPACE:srcint}:%{IPV4:srcip}/%{BASE10NUM:srcport} dst %{NOTSPACE:dstint}:%{IPV4:dstip}/%{BASE10NUM:dstport} by access-group %{QUOTEDSTRING:acl}",
+                    "type": "grok_pattern"
+                },
+                "extractor_type": "grok",
+                "order": 0,
+                "source_field": "full_message",
+                "target_field": "",
+                "title": "ASA106023 TCP/UDP Denies"
+            }],
+            "global": false,
+            "running": true,
+            "title": "ansible test input",
+            "type": "org.graylog2.inputs.syslog.udp.SyslogUDPInput"
+        },
+        "skip_reason": "Conditional result was False",
+        "skipped": true
+    }]
+}

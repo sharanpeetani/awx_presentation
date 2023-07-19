@@ -1,0 +1,21 @@
+---
+- name: With dict sequential example
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    mount_points:
+      "3":
+        name: mount3
+        path: /tmp/c
+      "1":
+        name: mount1
+        path: /tmp/a
+      "2":
+        name: mount2
+        path: /tmp/b
+  tasks:
+    - name: Print sequentially over dict
+      debug:
+        msg: "{{ mount_points[item] }}"
+      with_sequence: "{{ mount_points | length }}"

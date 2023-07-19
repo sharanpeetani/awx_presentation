@@ -1,0 +1,71 @@
+---
+- hosts: debian
+  become: true
+  gather_facts: true
+  tasks:
+
+  # - name: check for missing updates
+  #   dnf:
+  #     list: updates
+  #     update_cache: true
+  #   register: available_updates
+  #   when: ansible_distribution == 'Rocky'
+
+  # - name: check for missing updates
+  #   apt:
+  #     upgrade: dist
+  #     update_cache: yes
+  #     autoremove: yes
+  #     autoclean: yes
+  #   register: available_updates
+  #   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+  - command: yum clean metadata
+    register: clean_metadata
+
+  - debug:
+      msg: "{{ clean_metadata }}"
+
+  # - name: check for missing updates
+  #   yum:
+  #     list: updates
+  #     update_cache: true
+  #   register: available_updates
+  #   when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+  #
+  # - debug:
+  #     msg: "{{ available_updates }}"
+
+  # - name: List packages to be updated
+  #   debug:
+  #     msg: |
+  #       "{% set output = [] %}\
+  #         {% for result in available_updates %}\
+  #           {{ output.append( result.name ~ '-' ~ result.version ~ '-' ~ result.release ) }}\
+  #         {% endfor %}\
+  #       {{ output }}"
+  #   when: available_updates is defined
+  # - name: install all updates
+  #   apt:
+  #     upgrade: dist
+  #     update_cache: yes
+  #     autoremove: yes
+  #     autoclean: yes
+  #   register: result
+  #
+  # - name: List installed and updated packages
+  #   shell: grep -E "^$(date +%Y-%m-%d).+ (install|upgrade) " /var/log/dpkg.log |cut -d " " -f 3-5
+  #   register: result
+  #
+  # - name: Show Output
+  #   debug: msg="{{ result }}"
+
+  # - name: List packages to be updated
+  #   debug:
+  #     msg: |
+  #       "{% set output = [] %}\
+  #         {% for result in result.stdout_lines %}\
+  #           {{ output.append( result.name ~ '-' ~ result.version ~ '-' ~ result.release ) }}\
+  #         {% endfor %}\
+  #       {{ output }}"
+  #   when: result.stdout_lines is defined

@@ -1,0 +1,17 @@
+---
+- hosts: all
+  gather_facts: yes 
+  become: yes
+  tasks:
+  - set_fact:
+      vgs_info: '{{ vgs | default({}) | combine({item.value.vg: [item.key]}, list_merge="append") }}'
+    with_items: '{{ ansible_lvm.pvs | dict2items }}'
+#  - set_fact:
+#      before_add: "{{ ansible_lvm.pvs.keys() }}"
+###      after_add: "{{ hostvars[inventory_hostname].ansible_devices.keys()|select('string')|list }}"
+
+  - debug:
+      msg: "{{ vgs_info }}"
+
+  - debug: 
+      msg: "{{ ansible_lvm.pvs | dict2items | selectattr('value.vg', 'match', 'rhel_rhel8') | map(attribute='key') | list }}"

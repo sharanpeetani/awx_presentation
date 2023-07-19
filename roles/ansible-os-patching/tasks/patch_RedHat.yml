@@ -2,9 +2,9 @@
 
 - name: upgrade packages via yum
   yum:
-    name={{ yum_name }}
-    state={{ yum_state }}
-    exclude={{ yum_exclude }}
+    name: "{{ yum_name }}"
+    state: "{{ yum_state }}"
+    exclude=: "{{ yum_exclude }}"
   register: yumcommandout
   when:
     - (ansible_facts['distribution_major_version'] == '7')

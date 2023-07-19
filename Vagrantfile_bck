@@ -1,41 +1,39 @@
 Vagrant.configure("2") do |config|
   servers=[
-
+    {
+      :host => "centos1",
+      :hostname => "centos1.lab.com",
+      :box => "centos/7",
+      :ip => "192.168.56.105",
+      :ssh_port => '2228'
+    },
+    {
+      :host => "centos2",
+      :hostname => "centos2.lab.com",
+      :box => "centos/7",
+      :ip => "192.168.56.106",
+      :ssh_port => '2229'
+    },
     {
       :host => "ubuntu1",
       :hostname => "ubuntu1.lab.com",
       :box => "bento/ubuntu-22.04",
       :ip => "192.168.56.107",
-      :ssh_port => '2230',
-      :cpu => '2',
-      :memory => '2048'
+      :ssh_port => '2230'
     },
     {
       :host => "ubuntu2",
       :hostname => "ubuntu2.lab.com",
       :box => "bento/ubuntu-18.04",
       :ip => "192.168.56.108",
-      :ssh_port => '2231',
-      :cpu => '1',
-      :memory => '1024'
+      :ssh_port => '2231'
     },
     {
       :host => "rocky1",
       :hostname => "rocky1.lab.com",
       :box => "rockylinux/8",
       :ip => "192.168.56.109",
-      :ssh_port => '2232',
-      :cpu => '1',
-      :memory => '1024'
-    },
-    {
-      :host => "rocky2",
-      :hostname => "rocky2.lab.com",
-      :box => "rockylinux/8",
-      :ip => "192.168.56.110",
-      :ssh_port => '2233',
-      :cpu => '1',
-      :memory => '1024'
+      :ssh_port => '2232'
     },
 
   ]
@@ -46,13 +44,13 @@ Vagrant.configure("2") do |config|
       node.vm.box = machine[:box]
       node.vm.hostname = machine[:hostname]
       node.vm.synced_folder '.', '/vagrant', disabled: true
-
+    
       node.vm.network :private_network, ip: machine[:ip]
       node.vm.network "forwarded_port", guest: 22, host: machine[:ssh_port], id: "ssh"
 
       node.vm.provider :virtualbox do |v|
-        v.customize ["modifyvm", :id, "--memory", machine[:memory]]
-        v.customize ["modifyvm", :id, "--cpus", machine[:cpu]]
+        v.customize ["modifyvm", :id, "--memory", 1024]
+        v.customize ["modifyvm", :id, "--cpus", 1]
         v.customize ["modifyvm", :id, "--name", machine[:hostname]]
       end
     end

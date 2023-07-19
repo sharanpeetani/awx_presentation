@@ -1,0 +1,8 @@
+---
+
+- name: Copy the motd file
+  template:
+    src: motd.j2
+    dest: /etc/motd
+  tags:
+  - motd_config

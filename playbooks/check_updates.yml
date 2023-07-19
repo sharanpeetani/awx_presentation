@@ -1,0 +1,69 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+
+  - name: gather the package facts
+    package_facts:
+    register: packages_list_pre_update
+
+  - name: packages before update
+    debug:
+      msg: "{{ packages_list_pre_update }}"
+
+  - command: dnf clean all && dnf clean metadata
+
+  - name: check for missing updates
+    yum:
+      list: updates
+      update_cache: true
+    register: available_updates
+    when: ansible_distribution == 'RedHat'
+
+  - debug:
+      msg: "{{ available_updates.results }}"
+
+  # - name: Show packages to upgrade
+  #   debug:
+  #     msg: >-
+  #       {%- set output=[] -%}
+  #       {%- for p in available_updates.results -%}
+  #       {{ output.append('%-40s' % (p.name ~ '-' ~ p.version) ~ ' | repo: ' ~ p.repo) }}
+  #       {%- endfor -%}
+  #       {{ output }}
+  #
+  - name: List packages to be updated
+    debug:
+      msg: >-
+        {%- set output = [] -%}
+        {%- for pkg in available_updates.results -%}
+          {{ output.append( '%-40s' % (pkg.name ~ '-' ~ pkg.version ~ '-' ~ pkg.release ~ '-' ~ pkg.arch) ~ ' | Repo: ' ~ pkg.repo ) }}
+        {%- endfor -%}
+        {{ output }}
+    when: available_updates is defined
+
+  - name: update packages
+    yum:
+      name: '*'
+      state: latest
+      update_cache: yes
+      skip_broken: yes
+    register: patch_result
+
+  - name: Restart RedHat server
+    reboot:
+      msg: "Reboot triggered by Ansible"
+      connect_timeout: 5
+      pre_reboot_delay: 0
+      post_reboot_delay: 30
+      reboot_timeout: 100
+      test_command: "uptime"
+  
+  # - debug:
+  #     msg: >- 
+  #       {% set output = [] %}
+  #       {% for p in patch_result.results %}
+  #         {{ output.append(' New Version: ' ~ p.Installed ~ '-->' ~ p.Removed)}}
+  #       {% endfor %}
+  #       {{ output }}

@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no 
+  tasks:
+  - command: cat /etc/hosts
+    register: file_content
+
+  - debug:
+      msg: "{{ file_content.stdout_lines }}"
