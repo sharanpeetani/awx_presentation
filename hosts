@@ -1,14 +1,13 @@
 [all]
 ubuntu1.lab.com ansible_host=192.168.56.107 ansible_user=vagrant ansible_python_interpreter=/usr/bin/python3
 ubuntu2.lab.com ansible_host=192.168.56.108 ansible_user=vagrant ansible_python_interpreter=/usr/bin/python3
-rocky1.lab.com ansible_host=192.168.56.109 ansible_user=vagrant ansible_python_interpreter=/usr/local/bin/python3.10
-rocky2.lab.com ansible_host=192.168.56.110 ansible_user=vagrant ansible_python_interpreter=/usr/local/bin/python3.10
-
+rocky1.lab.com ansible_host=192.168.56.109 ansible_user=vagrant ansible_python_interpreter=/usr/local/bin/python3
+rocky2.lab.com ansible_host=192.168.56.110 ansible_user=vagrant ansible_python_interpreter=/usr/local/bin/python3
 
 [debian]
 ubuntu1.lab.com ansible_host=192.168.56.107 ansible_user=vagrant ansible_python_interpreter=/usr/bin/python3
 ubuntu2.lab.com ansible_host=192.168.56.108 ansible_user=vagrant ansible_python_interpreter=/usr/bin/python3
 
 [rocky]
-rocky1.lab.com ansible_host=192.168.56.109 ansible_user=vagrant ansible_python_interpreter=/usr/local/bin/python3.10
-rocky2.lab.com ansible_host=192.168.56.110 ansible_user=vagrant ansible_python_interpreter=/usr/local/bin/python3.10
+rocky1.lab.com ansible_host=192.168.56.109 ansible_user=vagrant ansible_python_interpreter=/usr/local/bin/python3
+rocky2.lab.com ansible_host=192.168.56.110 ansible_user=vagrant ansible_python_interpreter=/usr/local/bin/python3
